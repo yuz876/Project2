@@ -7,20 +7,25 @@ let witProgress = parseInt(window.getComputedStyle(slider).width);
 let result = Math.round((witBar/witProgress)*100)
 
 
-function move() {
-    setInterval(addFrame, 100);
-    function addFrame() {
-        if (result < 100) {
-            result = result + 5;
-            progress.style.width = result + "%";
-            progress.innerHTML = result + "%"
+function move(loadbtnClickCtr) {
+    result = 0;
+    
+    if (loadbtnClickCtr == 1) {
+        const myInterval = setInterval(addFrame, 100);
+        function addFrame() {
+            if (result < 100) {
+                result = result + 5; 
+                progress.style.width = result + "%";
+                progress.innerHTML = result + "%";
+            }
         }
-       
     }
 }
 
+let loadbtnClickCtr = 0;
 btn.addEventListener('click', function(){
-    move();
+    loadbtnClickCtr += 1;
+    move(loadbtnClickCtr);
 })
 
 document.getElementById("searchbar").addEventListener('input', (event) => {
@@ -34,7 +39,9 @@ document.getElementById("searchbar").addEventListener('input', (event) => {
 })
 
 function showComplete(inputwords) {
+    console.log("inputwords: ", inputwords)
     const renderhtml = !inputwords.length ? '' : inputwords.join('');
+    console.log("renderhtml: ", renderhtml)
     document.querySelector('ul').innerHTML = renderhtml; 
 
 }
